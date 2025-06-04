@@ -1,0 +1,24 @@
+# Use official Shiny base image
+FROM rocker/shiny:latest
+
+# Install R packages (you can expand this as needed)
+RUN install2.r --error \
+    shiny \
+    ggplot2 \
+    dplyr \
+    readxl \
+    stringr \
+    lubridate \
+    leaflet \
+    bslib \
+    tidyr \
+    plotly
+
+# Copy your app into the image
+COPY app.R /srv/shiny-server/
+
+# Expose port
+EXPOSE 3838
+
+# Run the app
+CMD ["/usr/bin/shiny-server"]
